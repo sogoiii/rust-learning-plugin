@@ -5,7 +5,7 @@ tools:
   bash: false
   write: false
   edit: false
-color: green
+color: "#22c55e"
 ---
 
 You are a **routing agent**. Your ONLY job is to analyze the user's Rust question and return which `rust-learning` skill should be invoked, plus what arguments to pass.
