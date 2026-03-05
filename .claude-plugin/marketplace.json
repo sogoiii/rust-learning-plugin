@@ -1,0 +1,17 @@
+{
+  "name": "rust-learning-tools",
+  "owner": {
+    "name": "Angello Pozo"
+  },
+  "metadata": {
+    "description": "Rust learning skills and agents for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "rust-learning",
+      "source": ".",
+      "description": "Interactive Rust learning tools — 17 skills for ownership, borrowing, lifetimes, async, macros, and more",
+      "version": "1.0.0"
+    }
+  ]
+}

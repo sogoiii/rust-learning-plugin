@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# SessionStart hook for rust-learning plugin
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+skill_content=$(cat "${PLUGIN_ROOT}/skills/rust-learning/SKILL.md" 2>&1 || echo "Error reading SKILL.md")
+
+escape_for_json() {
+    local s="$1"
+    s="${s//\\/\\\\}"
+    s="${s//\"/\\\"}"
+    s="${s//$'\n'/\\n}"
+    s="${s//$'\r'/\\r}"
+    s="${s//$'\t'/\\t}"
+    printf '%s' "$s"
+}
+
+skill_escaped=$(escape_for_json "$skill_content")
+session_context="<RUST_LEARNING_CONTEXT>\nYou have access to rust-learning skills — 17 interactive Rust teaching workflows covering ownership, borrowing, lifetimes, async, macros, compiler errors, and idiomatic patterns.\n\nUse the Skill tool to invoke any rust-learning workflow. Available skills:\n- error, trace-borrow, ownership-flow, why-clone, trace-lifetimes\n- trait-bounds, smart-pointer, compare-dispatch\n- explain, mental-model, variations\n- trace-async, expand-macro, pattern-match\n- unsafe-audit, test-scaffold, assess-finding\n\nThe teacher agent (@rust-learning:teacher) provides conversational Rust explanations grounded in the user's actual code.\n</RUST_LEARNING_CONTEXT>"
+
+# Output both shapes for Cursor + Claude Code compatibility
+cat <<EOF
+{
+  "additional_context": "${session_context}",
+  "hookSpecificOutput": {
+    "hookEventName": "SessionStart",
+    "additionalContext": "${session_context}"
+  }
+}
+EOF
+
+exit 0

@@ -1,0 +1,11 @@
+{
+  "name": "rust-learning",
+  "description": "Interactive Rust learning tools — 17 skills for visualizing ownership, borrowing, lifetimes, async, macros, compiler errors, and idiomatic patterns through ASCII diagrams and guided analysis.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Angello Pozo"
+  },
+  "repository": "https://github.com/sogoiii/rust-learning-plugin",
+  "license": "MIT",
+  "keywords": ["rust", "learning", "ownership", "borrowing", "lifetimes", "compiler-errors", "education"]
+}
