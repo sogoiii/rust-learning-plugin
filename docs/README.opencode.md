@@ -33,7 +33,12 @@ mkdir -p ~/.config/opencode/skills
 rm -rf ~/.config/opencode/skills/rust-learning
 ln -s ~/.config/opencode/rust-learning/skills/rust-learning ~/.config/opencode/skills/rust-learning
 
-# 4. Restart OpenCode
+# 4. Symlink agents
+mkdir -p ~/.config/opencode/agents
+rm -f ~/.config/opencode/agents/teacher.md
+ln -s ~/.config/opencode/rust-learning/.opencode/agents/teacher.md ~/.config/opencode/agents/teacher.md
+
+# 5. Restart OpenCode
 ```
 
 ### Windows (PowerShell)
@@ -52,16 +57,23 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\ski
 Remove-Item -Recurse -ErrorAction SilentlyContinue "$env:USERPROFILE\.config\opencode\skills\rust-learning"
 cmd /c mklink /J "$env:USERPROFILE\.config\opencode\skills\rust-learning" "$env:USERPROFILE\.config\opencode\rust-learning\skills\rust-learning"
 
-# 4. Restart OpenCode
+# 4. Symlink agents
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\agents"
+Remove-Item -ErrorAction SilentlyContinue "$env:USERPROFILE\.config\opencode\agents\teacher.md"
+cmd /c mklink "$env:USERPROFILE\.config\opencode\agents\teacher.md" "$env:USERPROFILE\.config\opencode\rust-learning\.opencode\agents\teacher.md"
+
+# 5. Restart OpenCode
 ```
 
 ## How It Works
 
-Rust Learning integrates with OpenCode through two mechanisms:
+Rust Learning integrates with OpenCode through three mechanisms:
 
 1. **Plugin** (`.opencode/plugins/rust-learning.js`): Uses OpenCode's `experimental.chat.system.transform` hook to inject skill context into the system prompt at session start.
 
 2. **Skills symlink**: OpenCode's native `skill` tool discovers skills in `~/.config/opencode/skills/`. The symlink exposes the 17 rust-learning workflows.
+
+3. **Agent** (`.opencode/agents/teacher.md`): A routing subagent that analyzes Rust questions and picks the right skill. Invoke with `@teacher` in your message.
 
 ## Usage
 
@@ -117,6 +129,7 @@ cd ~/.config/opencode/rust-learning && git pull
 ```bash
 rm ~/.config/opencode/plugins/rust-learning.js
 rm -rf ~/.config/opencode/skills/rust-learning
+rm -f ~/.config/opencode/agents/teacher.md
 ```
 
 Optionally delete the clone: `rm -rf ~/.config/opencode/rust-learning`.
@@ -134,6 +147,12 @@ Optionally delete the clone: `rm -rf ~/.config/opencode/rust-learning`.
 1. Check skills symlink: `ls -l ~/.config/opencode/skills/rust-learning`
 2. Verify it points to: `~/.config/opencode/rust-learning/skills/rust-learning`
 3. Use `skill` tool to list what's discovered
+
+### Teacher agent not found
+
+1. Check agent symlink: `ls -l ~/.config/opencode/agents/teacher.md`
+2. Verify it points to: `~/.config/opencode/rust-learning/.opencode/agents/teacher.md`
+3. Run `opencode agent list` to see discovered agents
 
 ## Getting Help
 

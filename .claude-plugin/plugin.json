@@ -1,7 +1,7 @@
 {
   "name": "rust-learning",
   "description": "Interactive Rust learning tools — 17 skills for visualizing ownership, borrowing, lifetimes, async, macros, compiler errors, and idiomatic patterns through ASCII diagrams and guided analysis.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Angello Pozo"
   },

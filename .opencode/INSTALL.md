@@ -33,7 +33,17 @@ rm -rf ~/.config/opencode/skills/rust-learning
 ln -s ~/.config/opencode/rust-learning/skills/rust-learning ~/.config/opencode/skills/rust-learning
 ```
 
-### 4. Restart OpenCode
+### 4. Symlink agents
+
+Create a symlink so OpenCode discovers the teacher routing agent:
+
+```bash
+mkdir -p ~/.config/opencode/agents
+rm -f ~/.config/opencode/agents/teacher.md
+ln -s ~/.config/opencode/rust-learning/.opencode/agents/teacher.md ~/.config/opencode/agents/teacher.md
+```
+
+### 5. Restart OpenCode
 
 Restart OpenCode. The plugin will automatically inject context.
 
@@ -72,6 +82,7 @@ cd ~/.config/opencode/rust-learning && git pull
 ```bash
 rm ~/.config/opencode/plugins/rust-learning.js
 rm -rf ~/.config/opencode/skills/rust-learning
+rm -f ~/.config/opencode/agents/teacher.md
 ```
 
 Optionally delete the clone: `rm -rf ~/.config/opencode/rust-learning`.
@@ -89,6 +100,12 @@ Optionally delete the clone: `rm -rf ~/.config/opencode/rust-learning`.
 1. Check skills symlink: `ls -l ~/.config/opencode/skills/rust-learning`
 2. Verify it points to: `~/.config/opencode/rust-learning/skills/rust-learning`
 3. Use `skill` tool to list what's discovered
+
+### Teacher agent not found
+
+1. Check agent symlink: `ls -l ~/.config/opencode/agents/teacher.md`
+2. Verify it points to: `~/.config/opencode/rust-learning/.opencode/agents/teacher.md`
+3. Run `opencode agent list` to see discovered agents
 
 ## Getting Help
 
